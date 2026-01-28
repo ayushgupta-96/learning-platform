@@ -1,0 +1,136 @@
+<!-- frontend/templates/student/points.html -->
+{% extends "base.html" %}
+
+{% block title %}Points & Rewards{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="points-page">
+    <nav class="navbar">
+        <h2>Points & Rewards</h2>
+        <a href="/student/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </nav>
+    
+    <div class="points-content">
+        <div class="points-summary">
+            <h1 id="pointsBalance">0 Points</h1>
+            <p>Available Balance</p>
+        </div>
+        
+        <div class="redeem-section">
+            <h3>Redeem Points</h3>
+            <div class="redeem-options">
+                <div class="redeem-card">
+                    <h4>🎁 Gift Card</h4>
+                    <p>Minimum: 100 points</p>
+                    <button class="btn btn-primary" onclick="showRedeemForm('gift_card')">Redeem</button>
+                </div>
+                <div class="redeem-card">
+                    <h4>💰 UPI Transfer</h4>
+                    <p>Minimum: 500 points</p>
+                    <button class="btn btn-primary" onclick="showRedeemForm('upi')">Redeem</button>
+                </div>
+            </div>
+        </div>
+        
+        <div id="redeemForm" style="display: none;">
+            <h3>Redemption Form</h3>
+            <form id="redemptionForm">
+                <div class="form-group">
+                    <label for="redeemPoints">Points to Redeem</label>
+                    <input type="number" id="redeemPoints" required min="1">
+                </div>
+                <div id="upiField" class="form-group" style="display: none;">
+                    <label for="upiId">UPI ID</label>
+                    <input type="text" id="upiId" placeholder="yourname@upi">
+                </div>
+                <input type="hidden" id="redeemType">
+                <button type="submit" class="btn btn-success">Submit Request</button>
+                <button type="button" class="btn btn-secondary" onclick="hideRedeemForm()">Cancel</button>
+            </form>
+        </div>
+        
+        <div class="points-history">
+            <h3>Points History</h3>
+            <div id="historyContainer">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let currentBalance = 0;
+
+async function loadPointsData() {
+    const balance = await API.get('/points/balance');
+    currentBalance = balance.points_balance;
+    document.getElementById('pointsBalance').textContent = `${currentBalance} Points`;
+    
+    const history = await API.get('/points/history');
+    displayHistory(history.transactions);
+}
+
+function displayHistory(transactions) {
+    const container = document.getElementById('historyContainer');
+    if (!transactions || transactions.length === 0) {
+        container.innerHTML = '<p>No transactions yet</p>';
+        return;
+    }
+    
+    container.innerHTML = transactions.map(t => `
+        <div class="history-item ${t.transaction_type}">
+            <span>${t.description}</span>
+            <span class="points ${t.transaction_type}">${t.points > 0 ? '+' : ''}${t.points}</span>
+            <span class="date">${new Date(t.created_at).toLocaleDateString()}</span>
+        </div>
+    `).join('');
+}
+
+function showRedeemForm(type) {
+    document.getElementById('redeemForm').style.display = 'block';
+    document.getElementById('redeemType').value = type;
+    document.getElementById('upiField').style.display = type === 'upi' ? 'block' : 'none';
+}
+
+function hideRedeemForm() {
+    document.getElementById('redeemForm').style.display = 'none';
+    document.getElementById('redemptionForm').reset();
+}
+
+document.getElementById('redemptionForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const points = parseInt(document.getElementById('redeemPoints').value);
+    const type = document.getElementById('redeemType').value;
+    const upiId = type === 'upi' ? document.getElementById('upiId').value : null;
+    
+    if (points > currentBalance) {
+        alert('Insufficient points!');
+        return;
+    }
+    
+    const minPoints = type === 'gift_card' ? 100 : 500;
+    if (points < minPoints) {
+        alert(`Minimum ${minPoints} points required for ${type}`);
+        return;
+    }
+    
+    try {
+        await API.post('/points/redeem', { points, type, upi_id: upiId });
+        alert('Redemption request submitted successfully!');
+        hideRedeemForm();
+        loadPointsData();
+    } catch (err) {
+        alert('Error: ' + err.message);
+    }
+});
+
+loadPointsData();
+</script>
+{% endblock %}

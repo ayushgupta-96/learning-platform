@@ -1,0 +1,115 @@
+<!-- frontend/templates/student/video-chat.html -->
+{% extends "base.html" %}
+
+{% block title %}Video Chat{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+<style>
+.video-container {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.video-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+video {
+    width: 100%;
+    border-radius: 10px;
+    background: #000;
+}
+
+.local-video {
+    position: relative;
+}
+
+.video-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.control-btn {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+}
+
+.timer {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.status-message {
+    text-align: center;
+    padding: 20px;
+    background: #f0f0f0;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="video-chat-page">
+    <nav class="navbar">
+        <h2>Video Chat with Teacher</h2>
+        <a href="/student/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </nav>
+    
+    <div id="waitingScreen" class="status-message">
+        <h2>🔍 Finding a teacher...</h2>
+        <p>Please wait while we connect you with an available teacher</p>
+        <div class="loader"></div>
+    </div>
+    
+    <div id="videoContainer" class="video-container" style="display: none;">
+        <div class="timer">
+            <span id="timer">00:00:00</span>
+        </div>
+        
+        <div class="video-wrapper">
+            <div class="local-video">
+                <h4>You</h4>
+                <video id="localVideo" autoplay muted playsinline></video>
+            </div>
+            <div class="remote-video">
+                <h4>Teacher</h4>
+                <video id="remoteVideo" autoplay playsinline></video>
+            </div>
+        </div>
+        
+        <div class="video-controls">
+            <button id="toggleAudio" class="control-btn btn-success" onclick="toggleAudio()">
+                🎤 Mute
+            </button>
+            <button id="toggleVideo" class="control-btn btn-success" onclick="toggleVideo()">
+                📹 Turn Off Camera
+            </button>
+            <button id="endCall" class="control-btn btn-danger" onclick="endCall()">
+                📞 End Call
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/video-chat.js') }}"></script>
+{% endblock %}
+
+
+ 

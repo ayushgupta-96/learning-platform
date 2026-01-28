@@ -1,0 +1,97 @@
+<!-- frontend/templates/teacher/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/teacher.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <nav class="navbar">
+        <h2>Teacher Dashboard</h2>
+        <div class="nav-actions">
+            <span id="teacherName" class="user-name"></span>
+            <button onclick="logout()" class="btn btn-secondary">Logout</button>
+        </div>
+    </nav>
+    
+    <div class="dashboard-content">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-info">
+                    <h3 id="teachingTime">0 min</h3>
+                    <p>Total Teaching Time</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎥</div>
+                <div class="stat-info">
+                    <h3 id="totalSessions">0</h3>
+                    <p>Total Sessions</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📅</div>
+                <div class="stat-info">
+                    <h3 id="monthSessions">0</h3>
+                    <p>Sessions This Month</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-info">
+                    <h3 id="availability">Offline</h3>
+                    <p>Availability Status</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-cards">
+            <div class="action-card">
+                <h3>🎥 Connect with Students</h3>
+                <p>Start accepting student video chat requests</p>
+                <a href="/teacher/video-chat" class="btn btn-primary">Start Teaching</a>
+            </div>
+            
+            <div class="action-card">
+                <h3>💰 Payment Information</h3>
+                <p>Get paid for your teaching time</p>
+                <a href="https://wa.me/+917070211616?text=Payment%20For%20Time" target="_blank" class="btn btn-success">
+                    Request Payment
+                </a>
+            </div>
+            
+            <div class="action-card">
+                <h3>📋 Session History</h3>
+                <p>View all your past teaching sessions</p>
+                <button class="btn btn-primary" onclick="loadSessionHistory()">View History</button>
+            </div>
+        </div>
+        
+        <div class="availability-toggle">
+            <h3>Availability</h3>
+            <button id="toggleAvailability" class="btn btn-primary" onclick="toggleAvailability()">
+                Toggle Availability
+            </button>
+            <p id="availabilityStatus">Loading...</p>
+        </div>
+        
+        <div id="sessionHistory" class="session-history" style="display: none;">
+            <h3>Recent Sessions</h3>
+            <div id="historyContainer">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/teacher-dashboard.js') }}"></script>
+{% endblock %}
+
+
+ 

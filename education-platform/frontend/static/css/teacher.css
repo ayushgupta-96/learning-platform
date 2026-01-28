@@ -1,0 +1,50 @@
+/* frontend/static/css/teacher.css */
+/* Import student.css styles and override as needed */
+@import 'student.css';
+
+/* Teacher-specific color scheme */
+.stat-card {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.action-card h3,
+.profile-section h3,
+.navbar {
+    background: #f5576c;
+}
+
+.availability-toggle {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.availability-toggle h3 {
+    color: #f5576c;
+    margin-bottom: 20px;
+}
+
+.session-history {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 30px;
+}
+
+.session-history h3 {
+    color: #f5576c;
+    margin-bottom: 20px;
+}
+
+.session-item {
+    background: white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.session-item p {
+    margin: 5px 0;
+}
