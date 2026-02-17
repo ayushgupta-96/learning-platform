@@ -1,0 +1,47 @@
+<!-- frontend/templates/student/login.html -->
+{% extends "base.html" %}
+
+{% block title %}Student Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-card">
+        <h1>learners Login</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div id="errorMessage" class="error-message"></div>
+            <button type="submit" class="btn btn-primary btn-full">Login</button>
+        </form>
+        <p class="auth-link">Don't have an account? <a href="/student/signup">Sign up</a></p>
+        <p class="auth-link"><a href="/">← Back to Home</a></p>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = {
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        };
+        await handleStudentLogin(formData);
+    });
+</script>
+{% endblock %}
+
+
+ 

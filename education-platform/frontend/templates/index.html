@@ -1,0 +1,64 @@
+<!-- frontend/templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}Welcome - Education Platform{% endblock %}
+
+{% block content %}
+<div class="landing-page">
+    <header class="header">
+        <h1>🎓 Learning Platform</h1>
+        <p class="tagline">Learn English • Practice Speaking • By Connect with friends</p>
+    </header>
+    
+    <div class="role-selection">
+        <div class="role-card">
+            <div class="role-icon">👨‍🎓</div>
+            <h2>I'm Learner</h2>
+            <p>learn English, earn points, and connect with friends who teach You</p>
+            <div class="btn-group">
+                <a href="/student/login" class="btn btn-primary">Login</a>
+                <a href="/student/signup" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
+        
+        <div class="role-card">
+            <div class="role-icon">👨‍🏫</div>
+            <h2>I'm Teacher</h2>
+            <p>Help learners improve their English and track your teaching hours and Earn money</p>
+            <div class="btn-group">
+                <a href="/teacher/login" class="btn btn-primary">Login</a>
+                <a href="/teacher/signup" class="btn btn-secondary">Sign Up</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="features">
+        <h3>Features</h3>
+        <div class="feature-grid">
+            <div class="feature-item">
+                <span class="feature-icon">📝</span>
+                <h4>English Training</h4>
+                <p>Practice with MCQs and speaking prompts</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">🎥</span>
+                <h4>Live Video Chat</h4>
+                <p>One-on-one sessions with teachers</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">⭐</span>
+                <h4>Points System</h4>
+                <p>Earn and redeem points for rewards</p>
+            </div>
+            <div class="feature-item">
+                <span class="feature-icon">📊</span>
+                <h4>Track Progress</h4>
+                <p>Monitor your learning journey</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+ 

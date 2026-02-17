@@ -1,0 +1,87 @@
+<!-- frontend/templates/student/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <nav class="navbar">
+        <h2>Student Dashboard</h2>
+        <div class="nav-actions">
+            <span id="studentName" class="user-name"></span>
+            <button onclick="logout()" class="btn btn-secondary">Logout</button>
+        </div>
+    </nav>
+    
+    <div class="dashboard-content">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">⭐</div>
+                <div class="stat-info">
+                    <h3 id="pointsBalance">0</h3>
+                    <p>Points Balance</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">⏱️</div>
+                <div class="stat-info">
+                    <h3 id="videoTime">0 min</h3>
+                    <p>Total Video Time</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📈</div>
+                <div class="stat-info">
+                    <h3 id="progress">0%</h3>
+                    <p>Training Progress</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎥</div>
+                <div class="stat-info">
+                    <h3 id="totalSessions">0</h3>
+                    <p>Total Sessions</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="action-cards">
+            <div class="action-card">
+                <h3>📝 Practice English</h3>
+                <p>Answer questions and earn points</p>
+                <a href="/student/training" class="btn btn-primary">Start Training</a>
+            </div>
+            
+            <div class="action-card">
+                <h3>🎥 Video Chat</h3>
+                <p>Connect with a teacher for live practice</p>
+                <a href="/student/video-chat" class="btn btn-primary">Start Video Chat</a>
+            </div>
+            
+            <div class="action-card">
+                <h3>🎁 Redeem Points</h3>
+                <p>Use your points for rewards</p>
+                <a href="/student/points" class="btn btn-primary">View Points</a>
+            </div>
+        </div>
+        
+        <div class="profile-section">
+            <h3>Profile Information</h3>
+            <div id="profileInfo" class="profile-info">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/student-dashboard.js') }}"></script>
+{% endblock %}
+
+
+ 

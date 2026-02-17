@@ -1,0 +1,65 @@
+<!-- frontend/templates/student/training.html -->
+{% extends "base.html" %}
+
+{% block title %}English Training{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/student.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="training-container">
+    <nav class="navbar">
+        <h2>English Training</h2>
+        <div class="nav-actions">
+            <span class="points-display">Points: <strong id="pointsDisplay">0</strong></span>
+            <a href="/student/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </nav>
+    
+    <div class="training-content">
+        <div class="difficulty-selector">
+            <h3>Select Difficulty</h3>
+            <div class="difficulty-buttons">
+                <button class="btn btn-success" onclick="loadQuestions('easy')">Easy (1 pts)</button>
+                <button class="btn btn-warning" onclick="loadQuestions('medium')">Medium (2 pts)</button>
+                <button class="btn btn-danger" onclick="loadQuestions('hard')">Hard (3 pts)</button>
+            </div>
+        </div>
+        
+        <div id="questionContainer" class="question-container" style="display: none;">
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p class="question-counter">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">5</span></p>
+            
+            <div id="questionCard" class="question-card">
+                <h3 id="questionText"></h3>
+                <div id="optionsContainer" class="options-container">
+                    <!-- Options loaded dynamically -->
+                </div>
+                <div id="feedback" class="feedback"></div>
+                <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()" style="display: none;">Next Question</button>
+            </div>
+        </div>
+        
+        <div id="resultsContainer" class="results-container" style="display: none;">
+            <h2>🎉 Training Complete!</h2>
+            <div class="results-stats">
+                <p>Correct Answers: <strong id="correctCount">0</strong></p>
+                <p>Points Earned: <strong id="pointsEarned">0</strong></p>
+                <p>Total Points: <strong id="totalPoints">0</strong></p>
+            </div>
+            <button class="btn btn-primary" onclick="location.reload()">Practice Again</button>
+            <a href="/student/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/training.js') }}"></script>
+{% endblock %}
+
+
+ 
