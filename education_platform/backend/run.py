@@ -1,5 +1,5 @@
 # backend/run.py
-from app import create_app, socketio
+from education_platform.backend.app import create_app, socketio
 
 app = create_app()
 
