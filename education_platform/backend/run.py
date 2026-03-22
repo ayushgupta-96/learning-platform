@@ -1,5 +1,7 @@
 # backend/run.py
-from education_platform.backend.app import create_app, socketio
+import eventlet
+eventlet.monkey_patch()
+from backend.app import create_app, socketio
 
 app = create_app()
 
